@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  django: &django
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: viva_colombia_django
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:5.0
+    container_name: viva_colombia_redis
